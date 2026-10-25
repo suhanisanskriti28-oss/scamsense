@@ -4,7 +4,7 @@ import helmet from "helmet";
 import mongoSanitize from "express-mongo-sanitize";
 import morgan from "morgan";
 import healthRouter from "./routes/health.js";
-import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
+import { apiLimiter } from "./middleware/rateLimiter.js";
 
 const app = express();
 
@@ -25,6 +25,7 @@ if (process.env.NODE_ENV !== "test") {
 }
 
 // Routes
+app.use(apiLimiter);
 app.use("/api", healthRouter);
 
 // Error handlers
