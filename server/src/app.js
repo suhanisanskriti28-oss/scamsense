@@ -3,12 +3,21 @@ import cors from "cors";
 import helmet from "helmet";
 import mongoSanitize from "express-mongo-sanitize";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 import healthRouter from "./routes/health.js";
+import { notFoundHandler, errorHandler } from "./middleware/errorHandler.js";
+import authRouter from "./routes/auth.js";
+import reportRouter from "./routes/report.js";
+import analysisRouter from "./routes/analysis.js";
+import historyRouter from "./routes/history.js";
+import adminRouter from "./routes/admin.js";
+import userRouter from "./routes/user.js";
 import { apiLimiter } from "./middleware/rateLimiter.js";
 
 const app = express();
 
 // Security & logging middleware
+app.use(cookieParser());
 app.use(helmet());
 app.use(
   cors({
@@ -26,9 +35,13 @@ if (process.env.NODE_ENV !== "test") {
 
 // Routes
 app.use(apiLimiter);
+app.use("/api/auth", authRouter);
+app.use("/api/analysis", analysisRouter);
+app.use("/api/reports", reportRouter);
+app.use("/api/history", historyRouter);
+app.use("/api/user", userRouter);
+app.use("/api/admin", adminRouter);
 app.use("/api", healthRouter);
-
-// Error handlers
 app.use(notFoundHandler);
 app.use(errorHandler);
 
