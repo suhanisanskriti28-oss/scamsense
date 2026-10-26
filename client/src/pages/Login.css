@@ -1,0 +1,115 @@
+.auth-page {
+  display: flex;
+  justify-content: center;
+  min-height: calc(100vh - 4.5rem);
+  padding: 3rem 1.25rem;
+  background:
+    radial-gradient(ellipse at 50% 34%, rgba(22, 124, 131, 0.2), transparent 26rem),
+    radial-gradient(ellipse at 8% 100%, rgba(146, 118, 200, 0.08), transparent 32rem);
+}
+
+.auth-card {
+  width: min(100%, 31rem);
+  padding: clamp(1.5rem, 5vw, 3rem);
+  border: 1px solid rgba(193, 177, 232, 0.19);
+  border-radius: 1.15rem;
+  background: linear-gradient(145deg, rgba(11, 92, 107, 0.28), rgba(7, 29, 34, 0.78));
+  box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(14px);
+}
+
+.auth-card h1 {
+  margin-bottom: 0.65rem;
+  font-size: clamp(2.4rem, 7vw, 3.5rem);
+  letter-spacing: -0.04em;
+}
+
+.auth-intro {
+  margin-bottom: 2rem;
+  color: var(--cream-muted);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.login-form {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.login-form input {
+  width: 100%;
+  margin-bottom: 0.65rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(193, 177, 232, 0.24);
+  border-radius: 0.6rem;
+  background: rgba(7, 29, 34, 0.72);
+  color: var(--cream-warm);
+  font-size: 0.84rem;
+}
+
+.login-form input::placeholder {
+  color: rgba(214, 209, 197, 0.52);
+}
+
+.login-form button {
+  min-height: 3rem;
+  margin-top: 0.45rem;
+  padding: 0.75rem 1rem;
+  border: 0;
+  border-radius: 0.6rem;
+  background: var(--teal-accent);
+  color: var(--cream-warm);
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.login-form button:hover:not(:disabled) {
+  background: #1b8c91;
+  transform: translateY(-1px);
+}
+
+.login-form button:disabled {
+  cursor: wait;
+  opacity: 0.68;
+}
+
+.form-message {
+  padding: 0.75rem 0.85rem;
+  border-radius: 0.5rem;
+  font-size: 0.77rem;
+  line-height: 1.55;
+}
+
+.form-message-error {
+  border: 1px solid rgba(240, 142, 126, 0.35);
+  background: rgba(143, 57, 49, 0.16);
+  color: #ffd1c8;
+}
+
+.auth-switch {
+  margin: 1.5rem 0 0;
+  color: var(--cream-muted);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+.auth-switch a {
+  color: var(--lavender);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
+
+.login-form button:focus-visible {
+  outline: 2px solid var(--lavender);
+  outline-offset: 3px;
+}
+
+.login-form button {
+  border: none;
+}

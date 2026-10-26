@@ -4,6 +4,10 @@ import connectDB from "./config/db.js";
 
 import app from "./app.js";
 
+if (!process.env.JWT_SECRET) {
+  throw new Error("JWT_SECRET is required. Configure it in server/.env before starting the API.");
+}
+
 const PORT = process.env.PORT || 5000;
 
 connectDB();

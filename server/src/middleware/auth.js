@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 /**
  * Middleware to verify JWT sent in httpOnly cookie `token`.
- * On success attaches `req.user` with `{id, role}`.
+ * On success attaches the public identity claims needed by protected routes.
  */
 export const protect = (req, res, next) => {
   const token = req.cookies?.token;
@@ -14,7 +14,7 @@ export const protect = (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = { id: decoded.id, role: decoded.role };
+    req.user = { id: decoded.id, email: decoded.email, role: decoded.role };
     next();
   } catch (e) {
     const err = new Error("Invalid authentication token");

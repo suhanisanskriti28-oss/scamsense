@@ -1,0 +1,12 @@
+:root {
+  --bg-deep: #071D22;
+  --teal: #0B5C6B;
+  --teal-dark: #0A4F5B;
+  --teal-accent: #167C83;
+  --purple: #9276C8;
+  --lavender: #C1B1E8;
+  --cream-warm: #F5EFE0;
+  --cream-muted: #D6D1C5;
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+}

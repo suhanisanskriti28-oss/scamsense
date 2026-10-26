@@ -6,12 +6,12 @@ import crypto from "crypto";
 
 // Validation schemas
 const registerSchema = z.object({
-  email: z.string().email(),
+  email: z.string().trim().toLowerCase().email(),
   password: z.string().min(8),
 });
 
 const loginSchema = z.object({
-  email: z.string().email(),
+  email: z.string().trim().toLowerCase().email(),
   password: z.string().min(8),
 });
 
@@ -19,11 +19,31 @@ const loginSchema = z.object({
  * Generate JWT token (httpOnly cookie)
  */
 const generateToken = (user) => {
-  const payload = { id: user._id.toString(), role: user.role };
+  const payload = {
+    id: user._id.toString(),
+    email: user.email,
+    role: user.role,
+  };
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
     expiresIn: "7d",
   });
   return token;
+};
+
+const serializeUser = (user) => ({
+  id: user._id.toString(),
+  email: user.email,
+  role: user.role,
+});
+
+const sessionCookieOptions = () => {
+  const isProduction = process.env.NODE_ENV === "production";
+  return {
+    httpOnly: true,
+    sameSite: isProduction ? "none" : "strict",
+    secure: isProduction,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  };
 };
 
 export const register = async (req, res, next) => {
@@ -44,17 +64,21 @@ export const register = async (req, res, next) => {
       return next(err);
     }
     const user = new User({ email, password });
-    await user.save();
+    try {
+      await user.save();
+    } catch (err) {
+      if (err.code === 11000) {
+        const duplicate = new Error("User already exists");
+        duplicate.statusCode = 409;
+        return next(duplicate);
+      }
+      throw err;
+    }
     const token = generateToken(user);
     res
-      .cookie("token", token, {
-        httpOnly: true,
-        sameSite: "strict",
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      })
+      .cookie("token", token, sessionCookieOptions())
       .status(201)
-      .json({ message: "User registered", userId: user._id });
+      .json({ message: "User registered", user: serializeUser(user) });
   } catch (err) {
     next(err);
   }
@@ -84,14 +108,9 @@ export const login = async (req, res, next) => {
     }
     const token = generateToken(user);
     res
-      .cookie("token", token, {
-        httpOnly: true,
-        sameSite: "strict",
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      })
+      .cookie("token", token, sessionCookieOptions())
       .status(200)
-      .json({ message: "Logged in", userId: user._id });
+      .json({ message: "Logged in", user: serializeUser(user) });
   } catch (err) {
     next(err);
   }

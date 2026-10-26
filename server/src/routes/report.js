@@ -1,7 +1,7 @@
 // src/routes/report.js
 import express from "express";
 import { submitReport } from "../controllers/reportController.js";
-import protect from "../middleware/auth.js";
+import { protect } from "../middleware/auth.js";
 
 const router = express.Router();
 

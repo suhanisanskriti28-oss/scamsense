@@ -7,7 +7,6 @@
  * return `null` or a descriptive string, ensuring the API never crashes.
  */
 import dns from "dns";
-import fetch from "node-fetch";
 
 // Helper: timeout a promise (used for fetch)
 const timeoutPromise = (ms) => new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), ms));
