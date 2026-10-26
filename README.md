@@ -1,6 +1,16 @@
 # ScamSense
 
-ScamSense helps students review job descriptions, recruiter messages, emails, and offer letters for common recruitment-scam warning signs. It combines a deterministic signal engine with optional domain lookups, then explains what matched so users can make a more informed decision.
+## Problem statement
+
+Students and early-career job seekers can receive convincing internship or job offers that ask for fees, pressure them to act, or hide who is contacting them. It can be difficult to assess a message quickly, especially when the warning signs are embedded in a long job description or recruiter email.
+
+## Target users
+
+ScamSense is built for students, graduates, and early-career job seekers who want a second look at an internship or job opportunity before responding.
+
+## Solution
+
+ScamSense evaluates the text the user provides against a transparent set of recruitment-fraud signals. It shows a score, risk label, matched phrases, and explanations, and may add basic domain context for links and email addresses. Signed-in users can revisit their saved checks in History.
 
 > ScamSense is an evidence aid, not a guarantee or a substitute for independently verifying an employer. A low score does not prove an offer is legitimate.
 
@@ -22,6 +32,27 @@ ScamSense helps students review job descriptions, recruiter messages, emails, an
 - **Database:** MongoDB with Mongoose
 - **Authentication:** bcrypt and JWT stored in an httpOnly cookie
 - **Validation and tests:** Zod, Vitest, Supertest
+
+## Architecture
+
+```text
+React + TypeScript (Vite)
+  ├── Registration, login, analyzer, history, and report pages
+  └── Requests to /api (Vite proxy in development; VITE_API_BASE_URL in deployment)
+          ↓
+Express API
+  ├── Zod validation, error handling, rate limiting, and JWT-cookie authentication
+  ├── Signal engine and entity extraction
+  ├── Optional DNS MX and RDAP domain lookups
+  └── Mongoose persistence
+          ↓
+MongoDB
+  ├── Users (bcrypt password hashes)
+  ├── Per-user saved analyses
+  └── Community reports
+```
+
+The signal engine runs locally in the Express service; analysis does not depend on a paid LLM API. Domain intelligence is an optional external lookup and may be unavailable. The browser holds the session in an httpOnly cookie; protected API routes use the verified JWT identity to scope saved data.
 
 ## Requirements
 
@@ -168,6 +199,8 @@ npm --workspace=client run lint
 
 The repository includes a Render Blueprint for the Express API (`render.yaml`) and a Vercel configuration for the Vite single-page frontend (`vercel.json`).
 
+**Deployment status:** deployment is not yet confirmed. Add the public frontend URL and API health URL here after provisioning and verifying the hosting services. Do not submit placeholder URLs as live links.
+
 1. Push the repository to GitHub, then create a **MongoDB Atlas** database. Allow the Render service to connect to the Atlas cluster, and copy the database connection URI.
 2. In Render, create a Blueprint instance for this repository. Set `MONGODB_URI` to the Atlas URI and `CLIENT_ORIGIN` to the exact deployed Vercel origin (for example, `https://your-project.vercel.app`). Render generates `JWT_SECRET` for the API. Do not expose these values in source control.
 3. In Vercel, import the same repository. Keep the project root at the repository root so the workspace build command works. Set `VITE_API_BASE_URL` to the Render API origin (for example, `https://scamsense-api.onrender.com`), without a trailing slash, for Production and any other deployment environments you use.
@@ -197,24 +230,38 @@ server/
     services/    Signal engine, extraction, and domain intelligence
 ```
 
-## Demo video script (about 60 seconds)
+## Demo video script (about 3–4 minutes)
 
 **[Show the landing page]**
 
-“This is ScamSense: a quick, evidence-led way to take a closer look at a job offer before you act.”
+“Hi, I’m [your name], and this is ScamSense. Students and early-career job seekers often receive job messages that are difficult to verify. ScamSense gives them a second look by identifying specific warning signs in the text and explaining what was matched. It helps with verification; it does not claim to prove an offer is genuine or fraudulent.”
 
-**[Open Create account, register, then return to the analyzer]**
+**[Briefly show the landing page and navigation]**
 
-“I’ll create an account. ScamSense keeps analyses with my account so I can revisit them later.”
+“The main workflow is to create an account, review an offer, inspect the evidence, and revisit saved checks in History. Reports are also available for sharing community information.”
 
-**[Paste a normal Java/Spring Boot job description and analyse it]**
+**[Open Create account, register with a demo email, then return to the analyzer]**
 
-“Here’s a Java and Spring Boot role. The result shows the score and the signals the engine found. No matched warning signs does not prove the offer is genuine, so ScamSense makes that limitation clear.”
+“I’ll register with a demo account. Passwords are hashed by the server, and the signed-in session uses an httpOnly cookie. Analyses are saved under this account.”
 
-**[Replace the text with a suspicious fee request and analyse it]**
+**[Paste a representative Java/Spring Boot/React job description and analyse it]**
 
-“Now this message asks for a registration fee, creates urgency, and promises selection without an interview. ScamSense highlights those exact signals and explains why they matter.”
+“Here is a typical software role. ScamSense returns a score and risk label, shows which known signals matched, and provides context. No matched signals only means this text did not trigger the current checks; it does not verify the employer.”
 
-**[Show History, then log out]**
+**[Replace the text with a suspicious fee request that also creates urgency and guarantees selection; analyse it]**
 
-“Each check is saved in History, and I can sign out when I’m done. ScamSense helps me ask better questions; I still verify the employer independently.”
+“This message asks for an upfront fee, pressures the applicant to act immediately, and claims selection without an interview. The result highlights the matched phrases and explains each signal so the user can see why the score changed. The score is a deterministic heuristic, not a certainty.”
+
+**[Scroll to evidence and domain details]**
+
+“When the text contains a link or email domain, ScamSense may show basic DNS and registration details. Those checks can be unavailable and cannot establish that a recruiter is authorized to represent a company.”
+
+**[Open History, then log out]**
+
+“The completed checks appear in this account’s History. I can log out when I’m finished. Before paying or sharing personal information, I would contact the employer through independently verified official channels.”
+
+**[End on the landing page or deployed app URL]**
+
+“That’s ScamSense: evidence to guide a more careful next step. Thank you.”
+
+**Recording checklist:** use a demo account and non-sensitive offer text; show the actual result and History; avoid displaying secrets, personal messages, or real private contact details. Replace `[your name]` and add the verified public app URL after deployment.
