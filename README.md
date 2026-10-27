@@ -69,6 +69,18 @@ MongoDB
 
 The signal engine runs locally in the Express service; analysis does not depend on a paid LLM API. Domain intelligence is an optional external lookup and may be unavailable. The browser holds the session in an httpOnly cookie; protected API routes use the verified JWT identity to scope saved data.
 
+## Future enhancements
+
+These are ideas for future versions and are not capabilities currently provided by ScamSense:
+
+- Verify company and recruiter identities against trusted, official sources, with clear citations and safeguards against false matches.
+- Improve domain and sender checks while explaining the limits and freshness of external data.
+- Expand the signal set and support more recruitment languages and regional scam patterns.
+- Let users give feedback on signal usefulness and use that feedback to prioritize carefully reviewed rule improvements.
+- Add report moderation and community-report workflows to help keep shared information useful and safe.
+
+Any future identity checks should provide supporting evidence rather than claim certainty, and should continue to encourage independent verification.
+
 ## Requirements
 
 - Node.js 20.19+ or 22.12+
