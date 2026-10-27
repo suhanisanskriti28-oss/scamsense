@@ -234,7 +234,7 @@ The repository includes a Render Blueprint for the Express API (`render.yaml`) a
 4. Deploy the Vercel frontend, then set its exact origin in Render's `CLIENT_ORIGIN` environment variable and redeploy/restart the API if needed.
 5. Verify the API health endpoint at `https://<render-service>.onrender.com/api/health`, then test account registration, login, analysis, history, and logout on the deployed Vercel URL.
 
-The production API uses secure cross-site cookies, so the Vercel frontend sends requests with credentials and the API must return credentialed CORS headers for the configured `CLIENT_ORIGIN`. Use HTTPS for both services. If you use a custom frontend domain, update `CLIENT_ORIGIN` to that exact origin.
+In production, the frontend sends `/api` requests through the Vercel rewrite to Render. This keeps browser requests and the httpOnly session cookie on the frontend's origin. Use HTTPS for both services. Keep Render's `CLIENT_ORIGIN` aligned with the deployed frontend origin for any direct cross-origin requests or future configuration changes.
 
 Provisioning Vercel, Render, and Atlas resources and setting their secrets require access to those accounts; do not commit production credentials to the repository.
 
@@ -256,4 +256,3 @@ server/
     routes/      Express API routes
     services/    Signal engine, extraction, and domain intelligence
 ```
-
