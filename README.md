@@ -1,5 +1,14 @@
 # ScamSense
 
+## Project links
+
+- **Deployed application:** [Open ScamSense](https://scamsense-1nif-86vo2pstu-sans-kriti-cal.vercel.app/)
+- **Backend health check:** [Check API status](https://scamsense-iohb.onrender.com/api/health)
+- **Demo video:** [Watch the ScamSense demo](https://drive.google.com/drive/folders/1utfspMW2vlUjNBAfm_Pvv3CR4lPNtAuX)
+- **Source code:** [GitHub repository](https://github.com/suhanisanskriti28-oss/scamsense)
+
+The demo is shared as a Google Drive folder. Make sure the video is uploaded and the folder permissions allow evaluators with the link to view it.
+
 ## Problem statement
 
 Students and early-career job seekers can receive convincing internship or job offers that ask for fees, pressure them to act, or hide who is contacting them. It can be difficult to assess a message quickly, especially when the warning signs are embedded in a long job description or recruiter email.
@@ -32,6 +41,12 @@ ScamSense evaluates the text the user provides against a transparent set of recr
 - **Database:** MongoDB with Mongoose
 - **Authentication:** bcrypt and JWT stored in an httpOnly cookie
 - **Validation and tests:** Zod, Vitest, Supertest
+
+## AI usage
+
+AI coding assistance was used during development for debugging, implementation support, documentation, and test planning. The project code was reviewed and integrated into the existing application, with the production frontend build, frontend lint, backend tests, and key user workflows checked.
+
+The offer-analysis engine itself is deterministic and rule-based. It does not currently use a generative AI or paid LLM API to produce risk scores or verdicts.
 
 ## Architecture
 
@@ -199,7 +214,7 @@ npm --workspace=client run lint
 
 The repository includes a Render Blueprint for the Express API (`render.yaml`) and a Vercel configuration in `client/vercel.json`, matching the Vercel project root directory (`client`).
 
-**Deployment status:** deployment is not yet confirmed. Add the public frontend URL and API health URL here after provisioning and verifying the hosting services. Do not submit placeholder URLs as live links.
+**Deployment links provided for this project:** [Frontend](https://scamsense-1nif-86vo2pstu-sans-kriti-cal.vercel.app/) · [API health](https://scamsense-iohb.onrender.com/api/health). Confirm both links are publicly accessible and that the deployed frontend is running the latest commit before submitting.
 
 1. Push the repository to GitHub, then create a **MongoDB Atlas** database. Allow the Render service to connect to the Atlas cluster, and copy the database connection URI.
 2. In Render, create a Blueprint instance for this repository. Set `MONGODB_URI` to the Atlas URI and `CLIENT_ORIGIN` to the exact deployed Vercel origin (for example, `https://your-project.vercel.app`). Render generates `JWT_SECRET` for the API. Do not expose these values in source control.
