@@ -257,38 +257,3 @@ server/
     services/    Signal engine, extraction, and domain intelligence
 ```
 
-## Demo video script (about 3–4 minutes)
-
-**[Show the landing page]**
-
-“Hi, I’m [your name], and this is ScamSense. Students and early-career job seekers often receive job messages that are difficult to verify. ScamSense gives them a second look by identifying specific warning signs in the text and explaining what was matched. It helps with verification; it does not claim to prove an offer is genuine or fraudulent.”
-
-**[Briefly show the landing page and navigation]**
-
-“The main workflow is to create an account, review an offer, inspect the evidence, and revisit saved checks in History. Reports are also available for sharing community information.”
-
-**[Open Create account, register with a demo email, then return to the analyzer]**
-
-“I’ll register with a demo account. Passwords are hashed by the server, and the signed-in session uses an httpOnly cookie. Analyses are saved under this account.”
-
-**[Paste a representative Java/Spring Boot/React job description and analyse it]**
-
-“Here is a typical software role. ScamSense returns a score and risk label, shows which known signals matched, and provides context. No matched signals only means this text did not trigger the current checks; it does not verify the employer.”
-
-**[Replace the text with a suspicious fee request that also creates urgency and guarantees selection; analyse it]**
-
-“This message asks for an upfront fee, pressures the applicant to act immediately, and claims selection without an interview. The result highlights the matched phrases and explains each signal so the user can see why the score changed. The score is a deterministic heuristic, not a certainty.”
-
-**[Scroll to evidence and domain details]**
-
-“When the text contains a link or email domain, ScamSense may show basic DNS and registration details. Those checks can be unavailable and cannot establish that a recruiter is authorized to represent a company.”
-
-**[Open History, then log out]**
-
-“The completed checks appear in this account’s History. I can log out when I’m finished. Before paying or sharing personal information, I would contact the employer through independently verified official channels.”
-
-**[End on the landing page or deployed app URL]**
-
-“That’s ScamSense: evidence to guide a more careful next step. Thank you.”
-
-**Recording checklist:** use a demo account and non-sensitive offer text; show the actual result and History; avoid displaying secrets, personal messages, or real private contact details. Replace `[your name]` and add the verified public app URL after deployment.
