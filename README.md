@@ -38,7 +38,7 @@ ScamSense evaluates the text the user provides against a transparent set of recr
 ```text
 React + TypeScript (Vite)
   ├── Registration, login, analyzer, history, and report pages
-  └── Requests to /api (Vite proxy in development; VITE_API_BASE_URL in deployment)
+  └── Requests to /api (Vite proxy in development; VITE_API_URL or VITE_API_BASE_URL in deployment)
           ↓
 Express API
   ├── Zod validation, error handling, rate limiting, and JWT-cookie authentication
@@ -203,7 +203,7 @@ The repository includes a Render Blueprint for the Express API (`render.yaml`) a
 
 1. Push the repository to GitHub, then create a **MongoDB Atlas** database. Allow the Render service to connect to the Atlas cluster, and copy the database connection URI.
 2. In Render, create a Blueprint instance for this repository. Set `MONGODB_URI` to the Atlas URI and `CLIENT_ORIGIN` to the exact deployed Vercel origin (for example, `https://your-project.vercel.app`). Render generates `JWT_SECRET` for the API. Do not expose these values in source control.
-3. In Vercel, import the same repository. Keep the project root at the repository root so the workspace build command works. Set `VITE_API_BASE_URL` to the Render API origin (for example, `https://scamsense-api.onrender.com`), without a trailing slash, for Production and any other deployment environments you use.
+3. In Vercel, import the same repository. Keep the project root at the repository root so the workspace build command works. Set `VITE_API_URL` to the Render API origin (for example, `https://scamsense-api.onrender.com`), without a trailing slash, for Production and any other deployment environments you use. `VITE_API_BASE_URL` is also supported for backwards compatibility.
 4. Deploy the Vercel frontend, then set its exact origin in Render's `CLIENT_ORIGIN` environment variable and redeploy/restart the API if needed.
 5. Verify the API health endpoint at `https://<render-service>.onrender.com/api/health`, then test account registration, login, analysis, history, and logout on the deployed Vercel URL.
 
