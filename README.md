@@ -2,12 +2,12 @@
 
 ## Project links
 
-- **Deployed application:** [Open ScamSense](https://scamsense-1nif-86vo2pstu-sans-kriti-cal.vercel.app/)
+- **Deployed application:** [Open ScamSense](https://scamsense-1nif-8fj3zxmqb-sans-kriti-cal.vercel.app/)
 - **Backend health check:** [Check API status](https://scamsense-iohb.onrender.com/api/health)
 - **Demo video:** [Watch the ScamSense demo](https://drive.google.com/drive/folders/1utfspMW2vlUjNBAfm_Pvv3CR4lPNtAuX)
 - **Source code:** [GitHub repository](https://github.com/suhanisanskriti28-oss/scamsense)
 
-The demo is shared as a Google Drive folder. Make sure the video is uploaded and the folder permissions allow evaluators with the link to view it.
+The demo video is shared in a Google Drive folder; the project owner has tested the link. Confirm that evaluators can view it with the link before final submission.
 
 ## Problem statement
 
@@ -226,7 +226,7 @@ npm --workspace=client run lint
 
 The repository includes a Render Blueprint for the Express API (`render.yaml`) and a Vercel configuration in `client/vercel.json`, matching the Vercel project root directory (`client`).
 
-**Deployment links provided for this project:** [Frontend](https://scamsense-1nif-86vo2pstu-sans-kriti-cal.vercel.app/) · [API health](https://scamsense-iohb.onrender.com/api/health). Confirm both links are publicly accessible and that the deployed frontend is running the latest commit before submitting.
+**Deployment links provided for this project:** [Frontend](https://scamsense-1nif-8fj3zxmqb-sans-kriti-cal.vercel.app/) · [API health](https://scamsense-iohb.onrender.com/api/health). The API health check responds successfully. The Vercel URL currently redirects unauthenticated visitors to Vercel Authentication from this environment; disable deployment protection or otherwise grant evaluator access before submitting.
 
 1. Push the repository to GitHub, then create a **MongoDB Atlas** database. Allow the Render service to connect to the Atlas cluster, and copy the database connection URI.
 2. In Render, create a Blueprint instance for this repository. Set `MONGODB_URI` to the Atlas URI and `CLIENT_ORIGIN` to the exact deployed Vercel origin (for example, `https://your-project.vercel.app`). Render generates `JWT_SECRET` for the API. Do not expose these values in source control.
