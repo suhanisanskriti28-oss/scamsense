@@ -40,7 +40,7 @@ const sessionCookieOptions = () => {
   const isProduction = process.env.NODE_ENV === "production";
   return {
     httpOnly: true,
-    sameSite: isProduction ? "none" : "strict",
+    sameSite: isProduction ? "lax" : "strict",
     secure: isProduction,
     maxAge: 7 * 24 * 60 * 60 * 1000,
   };
